@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Segoe UI', -apple-system, sans-serif; background: #0D1117; color: #E6EDF3; padding: 24px; }
+        .container { max-width: 800px; margin: 0 auto; }
+        h1 { color: #58A6FF; font-size: 28px; padding-bottom: 12px; border-bottom: 2px solid #30363D; margin-bottom: 24px; }
+        .stats { display: flex; gap: 16px; margin-bottom: 24px; }
+        .stat-box { background: #161B22; border: 1px solid #30363D; border-radius: 8px; padding: 12px 16px; flex: 1; text-align: center; }
+        .stat-number { font-size: 24px; font-weight: 700; color: #58A6FF; }
+        .stat-label { font-size: 12px; color: #8B949E; text-transform: uppercase; letter-spacing: 0.5px; }
+        .category-section { margin-bottom: 24px; }
+        .category-header { font-size: 18px; font-weight: 600; padding: 8px 0; margin-bottom: 12px; border-left: 4px solid; padding-left: 12px; }
+        .article { background: #161B22; border: 1px solid #30363D; border-left: 4px solid #30363D; padding: 16px; margin: 8px 0; border-radius: 6px; }
+        .article h3 { margin: 0 0 6px 0; font-size: 16px; }
+        .article h3 a { color: #58A6FF; text-decoration: none; }
+        .article h3 a:hover { text-decoration: underline; }
+        .meta { color: #8B949E; font-size: 13px; margin-bottom: 8px; display: flex; align-items: center; gap: 8px; }
+        .badge { display: inline-block; padding: 2px 8px; border-radius: 12px; font-weight: 600; font-size: 11px; }
+        .sev-CRITIQUE { background: rgba(248,81,73,0.2); color: #F85149; }
+        .sev-HAUTE { background: rgba(210,153,34,0.2); color: #D29922; }
+        .sev-MOYENNE { background: rgba(63,185,80,0.2); color: #3FB950; }
+        .sev-BASSE { background: rgba(88,166,255,0.2); color: #58A6FF; }
+        .sev-INFO { background: rgba(139,148,158,0.2); color: #8B949E; }
+        .score { display: inline-flex; align-items: center; justify-content: center; width: 28px; height: 28px; border-radius: 50%; font-size: 11px; font-weight: 700; }
+        .score-high { background: rgba(63,185,80,0.2); color: #3FB950; }
+        .score-medium { background: rgba(210,153,34,0.2); color: #D29922; }
+        .score-low { background: rgba(248,81,73,0.2); color: #F85149; }
+        .summary { margin-top: 8px; line-height: 1.6; color: #C9D1D9; font-size: 14px; }
+        .footer { margin-top: 32px; text-align: center; color: #484F58; font-size: 12px; padding-top: 16px; border-top: 1px solid #30363D; }
+        .cat-Cybersecurite { border-color: #F85149; color: #F85149; }
+        .cat-Systemes { border-color: #58A6FF; color: #58A6FF; }
+        .cat-Reseaux { border-color: #3FB950; color: #3FB950; }
+        .cat-Developpement { border-color: #D29922; color: #D29922; }
+        .cat-IA { border-color: #BC8CFF; color: #BC8CFF; }
+        .cat-Gaming { border-color: #F78166; color: #F78166; }
+        .cat-Hacks { border-color: #FF7B72; color: #FF7B72; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🛡️ CyberWatch — Digest Quotidien</h1>
+
+        <div class="stats">
+            <div class="stat-box">
+                <div class="stat-number">{{ articles | length }}</div>
+                <div class="stat-label">Articles</div>
+            </div>
+            <div class="stat-box">
+                <div class="stat-number">{{ categories | length }}</div>
+                <div class="stat-label">Categories</div>
+            </div>
+            <div class="stat-box">
+                <div class="stat-number">{{ critical_count }}</div>
+                <div class="stat-label">Critiques</div>
+            </div>
+        </div>
+
+        {% for cat_name, cat_articles in articles_by_category.items() %}
+        <div class="category-section">
+            <div class="category-header cat-{{ cat_name }}">{{ cat_name }} ({{ cat_articles | length }})</div>
+            {% for article in cat_articles %}
+            <div class="article" style="border-left-color: {{ article.couleur | default('#30363D') }};">
+                <h3><a href="{{ article.url }}">{{ article.titre_fr or article.title or article.titre }}</a></h3>
+                <div class="meta">
+                    <span class="badge sev-{{ article.severity | default(article.severite) | default('INFO') }}">{{ article.severity | default(article.severite) | default('INFO') }}</span>
+                    {% if article.score_fiabilite is defined and article.score_fiabilite >= 0 %}
+                    <span class="score {% if article.score_fiabilite >= 70 %}score-high{% elif article.score_fiabilite >= 40 %}score-medium{% else %}score-low{% endif %}">{{ article.score_fiabilite }}</span>
+                    {% endif %}
+                    <span>{{ article.source_name | default(article.source) }} · {{ article.published | default(article.date_publication) }}</span>
+                </div>
+                {% if article.resume_fr %}
+                <div class="summary">{{ article.resume_fr }}</div>
+                {% elif article.ai_summary %}
+                <div class="summary">{{ article.ai_summary }}</div>
+                {% elif article.summary %}
+                <div class="summary">{{ article.summary }}</div>
+                {% endif %}
+            </div>
+            {% endfor %}
+        </div>
+        {% endfor %}
+
+        <div class="footer">
+            Genere par CyberWatch — Agent IA de veille informatique<br>
+            {{ generation_date }}
+        </div>
+    </div>
+</body>
+</html>

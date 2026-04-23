@@ -1,0 +1,42 @@
+# CyberWatch - Dependencies
+# Python 3.12+
+
+# GUI
+PySide6>=6.7.0
+
+# RSS / Web Scraping
+feedparser>=6.0.11
+httpx>=0.27.0
+beautifulsoup4>=4.12.3
+lxml>=5.2.0
+
+# LLM Local (Ollama client)
+ollama>=0.3.0
+
+# Database
+# SQLite3 is built-in, no extra package needed
+
+# Email
+# smtplib + email are built-in
+
+# Configuration
+PyYAML>=6.0.2
+python-dotenv>=1.0.1
+
+# Templating (email HTML)
+Jinja2>=3.1.4
+
+# Scheduling
+schedule>=1.2.2
+
+# Logging structured
+python-json-logger>=2.0.7
+
+# Dev / Test
+pytest>=8.3.0
+pytest-cov>=5.0.0
+pytest-qt>=4.4.0
+ruff>=0.5.0
+
+# Packaging
+PyInstaller>=6.8.0

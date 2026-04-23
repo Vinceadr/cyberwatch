@@ -1,0 +1,497 @@
+# =============================================================
+# CyberWatch - Configuration principale
+# =============================================================
+
+app:
+  name: "CyberWatch"
+  version: "0.2.0"
+  language: "fr"
+  log_level: "INFO"
+
+# --- Sources de veille (31 flux RSS verifies) ---
+sources:
+  rss:
+    # ── Cybersecurite (9) ──
+    - name: "BleepingComputer"
+      url: "https://www.bleepingcomputer.com/feed/"
+      category: "Cybersecurite"
+      score_confiance: 92
+      langue: "en"
+      enabled: true
+    - name: "Krebs on Security"
+      url: "https://krebsonsecurity.com/feed/"
+      category: "Cybersecurite"
+      score_confiance: 95
+      langue: "en"
+      enabled: true
+    - name: "The Hacker News"
+      url: "https://feeds.feedburner.com/TheHackersNews"
+      category: "Cybersecurite"
+      score_confiance: 88
+      langue: "en"
+      enabled: true
+    - name: "CERT-FR"
+      url: "https://www.cert.ssi.gouv.fr/feed/"
+      category: "Cybersecurite"
+      score_confiance: 98
+      langue: "fr"
+      enabled: true
+    - name: "Dark Reading"
+      url: "https://www.darkreading.com/rss.xml"
+      category: "Cybersecurite"
+      score_confiance: 90
+      langue: "en"
+      enabled: true
+    - name: "SecurityWeek"
+      url: "https://www.securityweek.com/feed/"
+      category: "Cybersecurite"
+      score_confiance: 89
+      langue: "en"
+      enabled: true
+    - name: "Schneier on Security"
+      url: "https://www.schneier.com/feed/atom/"
+      category: "Cybersecurite"
+      score_confiance: 96
+      langue: "en"
+      enabled: true
+    - name: "NVD/NIST CVE"
+      url: "https://nvd.nist.gov/feeds/xml/cve/misc/nvd-rss.xml"
+      category: "Cybersecurite"
+      score_confiance: 99
+      langue: "en"
+      enabled: true
+    - name: "Recorded Future"
+      url: "https://www.recordedfuture.com/feed"
+      category: "Cybersecurite"
+      score_confiance: 87
+      langue: "en"
+      enabled: true
+    - name: "ZATAZ"
+      url: "https://www.zataz.com/feed/"
+      category: "Cybersecurite"
+      score_confiance: 88
+      langue: "fr"
+      enabled: true
+    - name: "UnderNews"
+      url: "https://www.undernews.fr/feed"
+      category: "Cybersecurite"
+      score_confiance: 82
+      langue: "fr"
+      enabled: true
+    - name: "Le Monde Informatique Securite"
+      url: "https://www.lemondeinformatique.fr/flux-rss/thematique/securite/rss.xml"
+      category: "Cybersecurite"
+      score_confiance: 90
+      langue: "fr"
+      enabled: true
+
+    # ── Systemes/Infra (7) ──
+    - name: "Ars Technica"
+      url: "https://feeds.arstechnica.com/arstechnica/index"
+      category: "Systemes"
+      score_confiance: 93
+      langue: "en"
+      enabled: true
+    - name: "Phoronix"
+      url: "https://www.phoronix.com/rss.php"
+      category: "Systemes"
+      score_confiance: 91
+      langue: "en"
+      enabled: true
+    - name: "AWS Blog"
+      url: "https://aws.amazon.com/blogs/aws/feed/"
+      category: "Systemes"
+      score_confiance: 94
+      langue: "en"
+      enabled: true
+    - name: "Azure Blog"
+      url: "https://azure.microsoft.com/en-us/blog/feed/"
+      category: "Systemes"
+      score_confiance: 93
+      langue: "en"
+      enabled: true
+    - name: "Cloudflare Blog"
+      url: "https://blog.cloudflare.com/rss/"
+      category: "Systemes"
+      score_confiance: 92
+      langue: "en"
+      enabled: true
+    - name: "ZDNet"
+      url: "https://www.zdnet.com/news/rss.xml"
+      category: "Systemes"
+      score_confiance: 85
+      langue: "en"
+      enabled: true
+    - name: "Korben"
+      url: "https://korben.info/feed"
+      category: "Systemes"
+      score_confiance: 82
+      langue: "fr"
+      enabled: true
+    - name: "IT-Connect"
+      url: "https://www.it-connect.fr/feed/"
+      category: "Systemes"
+      score_confiance: 88
+      langue: "fr"
+      enabled: true
+    - name: "Next INpact"
+      url: "https://next.ink/feed/"
+      category: "Systemes"
+      score_confiance: 93
+      langue: "fr"
+      enabled: true
+    - name: "Le Monde Informatique"
+      url: "https://www.lemondeinformatique.fr/flux-rss/thematique/toutes-les-actualites/rss.xml"
+      category: "Systemes"
+      score_confiance: 89
+      langue: "fr"
+      enabled: true
+    - name: "Linuxfr.org"
+      url: "https://linuxfr.org/news.atom"
+      category: "Systemes"
+      score_confiance: 85
+      langue: "fr"
+      enabled: true
+
+    # ── Reseaux (7) ──
+    - name: "Cisco Networking"
+      url: "https://blogs.cisco.com/networking/feed"
+      category: "Reseaux"
+      score_confiance: 90
+      langue: "en"
+      enabled: true
+    - name: "Network World"
+      url: "https://www.networkworld.com/feed/"
+      category: "Reseaux"
+      score_confiance: 88
+      langue: "en"
+      enabled: true
+    - name: "PacketPushers"
+      url: "https://packetpushers.net/feed/"
+      category: "Reseaux"
+      score_confiance: 86
+      langue: "en"
+      enabled: true
+    - name: "The Register Networking"
+      url: "https://www.theregister.com/headlines.atom"
+      category: "Reseaux"
+      score_confiance: 87
+      langue: "en"
+      enabled: true
+    - name: "RIPE Labs"
+      url: "https://labs.ripe.net/rss"
+      category: "Reseaux"
+      score_confiance: 92
+      langue: "en"
+      enabled: true
+    - name: "Juniper Blog"
+      url: "https://blogs.juniper.net/feed"
+      category: "Reseaux"
+      score_confiance: 89
+      langue: "en"
+      enabled: true
+    - name: "IPSpace"
+      url: "https://blog.ipspace.net/feed.xml"
+      category: "Reseaux"
+      score_confiance: 91
+      langue: "en"
+      enabled: true
+    - name: "IT-Connect Reseau"
+      url: "https://www.it-connect.fr/tag/reseau/feed/"
+      category: "Reseaux"
+      score_confiance: 87
+      langue: "fr"
+      enabled: true
+    - name: "Cisco France Blog"
+      url: "https://gblogs.cisco.com/fr/feed/"
+      category: "Reseaux"
+      score_confiance: 88
+      langue: "fr"
+      enabled: true
+
+    # ── Developpement (5) ──
+    - name: "Dev.to"
+      url: "https://dev.to/feed"
+      category: "Developpement"
+      score_confiance: 78
+      langue: "en"
+      enabled: true
+    - name: "GitHub Blog"
+      url: "https://github.blog/feed/"
+      category: "Developpement"
+      score_confiance: 94
+      langue: "en"
+      enabled: true
+    - name: "InfoQ"
+      url: "https://www.infoq.com/feed/"
+      category: "Developpement"
+      score_confiance: 90
+      langue: "en"
+      enabled: true
+    - name: "The New Stack"
+      url: "https://thenewstack.io/feed/"
+      category: "Developpement"
+      score_confiance: 87
+      langue: "en"
+      enabled: true
+    - name: "Hacker News Best"
+      url: "https://hnrss.org/best"
+      category: "Developpement"
+      score_confiance: 80
+      langue: "en"
+      enabled: true
+    - name: "Developpez.com"
+      url: "https://www.developpez.com/index/rss"
+      category: "Developpement"
+      score_confiance: 86
+      langue: "fr"
+      enabled: true
+    - name: "Le Journal du Hacker"
+      url: "https://www.journalduhacker.net/rss"
+      category: "Developpement"
+      score_confiance: 82
+      langue: "fr"
+      enabled: true
+    - name: "Human Coders News"
+      url: "https://news.humancoders.com/items/feed"
+      category: "Developpement"
+      score_confiance: 84
+      langue: "fr"
+      enabled: true
+
+    # ── IA/ML (8) ──
+    - name: "MIT Tech Review AI"
+      url: "https://www.technologyreview.com/feed/"
+      category: "IA"
+      score_confiance: 92
+      langue: "en"
+      enabled: true
+    - name: "Hugging Face Blog"
+      url: "https://huggingface.co/blog/feed.xml"
+      category: "IA"
+      score_confiance: 88
+      langue: "en"
+      enabled: true
+    - name: "Google AI Blog"
+      url: "https://blog.google/technology/ai/rss/"
+      category: "IA"
+      score_confiance: 93
+      langue: "en"
+      enabled: true
+    - name: "OpenAI Blog"
+      url: "https://openai.com/blog/rss.xml"
+      category: "IA"
+      score_confiance: 91
+      langue: "en"
+      enabled: true
+    - name: "VentureBeat AI"
+      url: "https://venturebeat.com/category/ai/feed/"
+      category: "IA"
+      score_confiance: 86
+      langue: "en"
+      enabled: true
+    - name: "Anthropic Blog"
+      url: "https://www.anthropic.com/research/rss.xml"
+      category: "IA"
+      score_confiance: 93
+      langue: "en"
+      enabled: true
+    - name: "DeepMind Blog"
+      url: "https://deepmind.google/blog/rss.xml"
+      category: "IA"
+      score_confiance: 94
+      langue: "en"
+      enabled: true
+    - name: "The Verge AI"
+      url: "https://www.theverge.com/rss/ai-artificial-intelligence/index.xml"
+      category: "IA"
+      score_confiance: 85
+      langue: "en"
+      enabled: true
+    - name: "ActuIA"
+      url: "https://www.actuia.com/feed/"
+      category: "IA"
+      score_confiance: 87
+      langue: "fr"
+      enabled: true
+    - name: "LeBigData.fr"
+      url: "https://www.lebigdata.fr/feed"
+      category: "IA"
+      score_confiance: 83
+      langue: "fr"
+      enabled: true
+    - name: "Siecle Digital IA"
+      url: "https://siecledigital.fr/categorie/intelligence-artificielle/feed/"
+      category: "IA"
+      score_confiance: 84
+      langue: "fr"
+      enabled: true
+
+    # ── Gaming (3) ──
+    - name: "Ars Technica Gaming"
+      url: "https://feeds.arstechnica.com/arstechnica/gaming"
+      category: "Gaming"
+      score_confiance: 90
+      langue: "en"
+      enabled: true
+    - name: "PC Gamer"
+      url: "https://www.pcgamer.com/rss/"
+      category: "Gaming"
+      score_confiance: 85
+      langue: "en"
+      enabled: true
+    - name: "Kotaku"
+      url: "https://kotaku.com/rss"
+      category: "Gaming"
+      score_confiance: 80
+      langue: "en"
+      enabled: true
+    - name: "JeuxVideo.com"
+      url: "https://www.jeuxvideo.com/rss/rss.xml"
+      category: "Gaming"
+      score_confiance: 84
+      langue: "fr"
+      enabled: true
+    - name: "Frandroid Gaming"
+      url: "https://www.frandroid.com/tag/jeux-video/feed"
+      category: "Gaming"
+      score_confiance: 82
+      langue: "fr"
+      enabled: true
+    - name: "Numerama Tech"
+      url: "https://www.numerama.com/feed/"
+      category: "Gaming"
+      score_confiance: 86
+      langue: "fr"
+      enabled: true
+
+    # ── Hacks / Data Breaches (7) ──
+    - name: "HackRead"
+      url: "https://www.hackread.com/feed/"
+      category: "Hacks"
+      score_confiance: 82
+      langue: "en"
+      enabled: true
+    - name: "DataBreaches.net"
+      url: "https://databreaches.net/feed/"
+      category: "Hacks"
+      score_confiance: 88
+      langue: "en"
+      enabled: true
+    - name: "The Record"
+      url: "https://therecord.media/feed"
+      category: "Hacks"
+      score_confiance: 90
+      langue: "en"
+      enabled: true
+    - name: "Risky Business News"
+      url: "https://news.risky.biz/rss/"
+      category: "Hacks"
+      score_confiance: 85
+      langue: "en"
+      enabled: true
+    - name: "RestorePrivacy"
+      url: "https://restoreprivacy.com/feed/"
+      category: "Hacks"
+      score_confiance: 78
+      langue: "en"
+      enabled: true
+    - name: "Cyble Blog"
+      url: "https://blog.cyble.com/feed/"
+      category: "Hacks"
+      score_confiance: 85
+      langue: "en"
+      enabled: true
+    - name: "TechCrunch Security"
+      url: "https://techcrunch.com/category/security/feed/"
+      category: "Hacks"
+      score_confiance: 88
+      langue: "en"
+      enabled: true
+    - name: "ZATAZ Hacks"
+      url: "https://www.zataz.com/tag/piratage/feed/"
+      category: "Hacks"
+      score_confiance: 89
+      langue: "fr"
+      enabled: true
+    - name: "01net Securite"
+      url: "https://www.01net.com/rss/info/flux-rss/flux-toutes-les-actualites/"
+      category: "Hacks"
+      score_confiance: 84
+      langue: "fr"
+      enabled: true
+    - name: "Clubic Securite"
+      url: "https://www.clubic.com/feed/news.rss"
+      category: "Hacks"
+      score_confiance: 82
+      langue: "fr"
+      enabled: true
+
+  web_scraping:
+    - name: "CISA Advisories"
+      url: "https://www.cisa.gov/news-events/cybersecurity-advisories"
+      selector: "div.views-row"
+      category: "Cybersecurite"
+      enabled: false
+
+# --- Base de donnees ---
+database:
+  path: "data/db/cyberwatch.db"
+  backup_enabled: true
+  backup_interval_hours: 24
+
+# --- Retention ---
+retention:
+  days: 7
+  purge_day: "sunday"
+  purge_time: "00:00"
+
+# --- LLM (Ollama) ---
+llm:
+  provider: "ollama"
+  base_url: "http://localhost:11434"
+  model: "llama3.1:8b"
+  fallback_model: "mistral:7b"
+  timeout_seconds: 120
+  tasks:
+    summarize:
+      system_prompt: >
+        Tu es un analyste en cybersecurite. Resume cet article en 3-5 phrases.
+        Identifie: la menace, les systemes affectes, la severite, les actions recommandees.
+        Reponds en francais.
+      max_tokens: 500
+    classify:
+      system_prompt: >
+        Classe cette alerte selon sa severite: CRITIQUE, HAUTE, MOYENNE, BASSE, INFO.
+        Reponds uniquement par le niveau de severite.
+      max_tokens: 10
+
+# --- Email / Alertes ---
+email:
+  enabled: false
+  smtp:
+    host: "smtp.gmail.com"
+    port: 587
+    use_tls: true
+    username: "${CYBERWATCH_SMTP_USER}"
+    password: "${CYBERWATCH_SMTP_PASS}"
+  sender: "cyberwatch@localhost"
+  recipients:
+    - "admin@example.com"
+  schedule:
+    daily_digest: "08:00"
+    critical_immediate: true
+
+# --- Scheduler ---
+scheduler:
+  fetch_interval_minutes: 30
+  digest_time: "08:00"
+  enabled: true
+
+# --- GUI ---
+gui:
+  theme: "dark"
+  window_width: 1200
+  window_height: 800
+  refresh_interval_seconds: 300
+

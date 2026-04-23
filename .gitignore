@@ -1,0 +1,59 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+*.egg-info/
+dist/
+build/
+*.egg
+
+# Virtual env
+.venv/
+venv/
+env/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+Thumbs.db
+.DS_Store
+desktop.ini
+
+# SQLite database
+data/db/*.db
+data/db/*.db-journal
+data/db/*.db-wal
+
+# PyInstaller
+*.spec
+build/
+dist/
+
+# Logs
+*.log
+logs/
+
+# Config secrets (ne jamais commit les credentials)
+.env
+config/secrets.yaml
+config/.env
+
+# Coverage
+htmlcov/
+.coverage
+.coverage.*
+coverage.xml
+
+# Data files at root of data/
+data/*.db
+data/*.db-journal
+
+# Backup files
+*.bak
+

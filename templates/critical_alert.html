@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <style>
+        body { font-family: 'Segoe UI', Arial, sans-serif; background: #1a1a2e; color: #e0e0e0; padding: 20px; }
+        .alert-box { background: #2c0b0b; border: 2px solid #e74c3c; padding: 20px; border-radius: 8px; }
+        h1 { color: #e74c3c; margin-top: 0; }
+        a { color: #00d4ff; }
+        .meta { color: #aaa; margin: 10px 0; }
+        .summary { line-height: 1.6; margin-top: 15px; }
+        .footer { margin-top: 30px; text-align: center; color: #555; font-size: 0.8em; }
+    </style>
+</head>
+<body>
+    <div class="alert-box">
+        <h1>🚨 Alerte Critique</h1>
+        <h2>{{ article.title }}</h2>
+        <div class="meta">
+            Source: {{ article.source_name }} | Catégorie: {{ article.category }}<br>
+            Date: {{ article.published }}
+        </div>
+        <div class="summary">
+            {% if article.ai_summary %}
+                {{ article.ai_summary }}
+            {% elif article.summary %}
+                {{ article.summary }}
+            {% endif %}
+        </div>
+        <p><a href="{{ article.url }}">🔗 Voir l'article complet</a></p>
+    </div>
+    <div class="footer">
+        CyberWatch — Alerte automatique
+    </div>
+</body>
+</html>
