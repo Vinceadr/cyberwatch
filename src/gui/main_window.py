@@ -91,11 +91,8 @@ class _Sidebar(QFrame):
 
         # Icon in etch-glow bordered box
         logo_box = QFrame()
-        logo_box.setFixedSize(38, 38)
-        logo_box.setStyleSheet(
-            f"QFrame {{ border: 1px solid {COLORS['accent']}; "
-            f"border-radius: 4px; padding: 4px; background: transparent; }}"
-        )
+        logo_box.setFixedSize(56, 56)
+        logo_box.setStyleSheet("QFrame { background: transparent; border: none; }")
         logo_box_lay = QHBoxLayout(logo_box)
         logo_box_lay.setContentsMargins(0, 0, 0, 0)
 
@@ -103,7 +100,7 @@ class _Sidebar(QFrame):
         logo_path = ASSET_DIR / "cyberwatch_logo.png"
         if logo_path.exists():
             pixmap = QPixmap(str(logo_path)).scaled(
-                34, 34, Qt.AspectRatioMode.KeepAspectRatio,
+                56, 56, Qt.AspectRatioMode.IgnoreAspectRatio,
                 Qt.TransformationMode.SmoothTransformation,
             )
             self._logo.setPixmap(pixmap)
@@ -111,7 +108,7 @@ class _Sidebar(QFrame):
             self._logo.setText("CW")
             self._logo.setFont(QFont(FONT_MONO, 14, QFont.Weight.Bold))
         self._logo.setStyleSheet("background: transparent;")
-        self._logo.setFixedSize(34, 34)
+        self._logo.setFixedSize(56, 56)
         self._logo.setAlignment(Qt.AlignmentFlag.AlignCenter)
         logo_box_lay.addWidget(self._logo)
         logo_row.addWidget(logo_box)
