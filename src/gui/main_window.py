@@ -100,7 +100,7 @@ class _Sidebar(QFrame):
         logo_box_lay.setContentsMargins(0, 0, 0, 0)
 
         self._logo = QLabel()
-        logo_path = ASSET_DIR / "Symbole radar moderne sur fond bleu.png"
+        logo_path = ASSET_DIR / "cyberwatch_logo.png"
         if logo_path.exists():
             pixmap = QPixmap(str(logo_path)).scaled(
                 34, 34, Qt.AspectRatioMode.KeepAspectRatio,
@@ -614,6 +614,97 @@ class _ResumeView(QScrollArea):
         sep.setStyleSheet(f"background: {COLORS['border']};")
         return sep
 
+
+    # ── Breakdown par categorie ────────────────────────────────
+
+    _CAT_DESC: dict = {
+        "cyber":    "Vulnerabilites, malwares, ransomwares, CERT et alertes de securite.",
+        "systemes": "OS, serveurs, mises a jour systeme et infrastructure.",
+        "reseaux":  "Protocoles, firewalls, VPN, DDoS et securite reseau.",
+        "dev":      "Developpement logiciel, DevSecOps, frameworks et outils.",
+        "ia":       "Intelligence artificielle, LLM, machine learning et ethique IA.",
+        "gaming":   "Securite gaming, exploits, mods et actualites jeux video.",
+        "hacks":    "Nouvelles techniques d'attaque, exploits zero-day, CTF et red team.",
+    }
+
+    def _render_category_breakdown(self) -> None:
+        """Affiche un bloc par categorie avec nb d articles + top 3 titres."""
+        from datetime import datetime, timedelta, timezone
+        from collections import defaultdict
+        from src.gui.styles import SIDEBAR_CATEGORIES
+        today = (datetime.now(tz=timezone.utc) - timedelta(hours=24)).isoformat()
+        try:
+            all_arts = self._db.get_articles(limit=2000, date_since=today)
+        except Exception:
+            return
+        if not all_arts:
+            return
+        by_cat: dict = defaultdict(list)
+        for art in all_arts:
+            cat = art.get("categorie") or art.get("category") or "unknown"
+            by_cat[cat].append(art)
+        active = [(k, by_cat[k]) for k in SIDEBAR_CATEGORIES if k in by_cat and k != "favoris"]
+        if not active:
+            return
+        self._content_layout.addWidget(self._section_label("PAR CATEGORIE — AUJOURD’HUI"))
+        self._content_layout.addWidget(self._separator())
+        for cat_key, arts in active:
+            self._content_layout.addWidget(self._make_category_block(cat_key, arts))
+
+    def _make_category_block(self, cat_key: str, arts: list) -> "QFrame":
+        from src.gui.styles import CATEGORY_META
+        meta = CATEGORY_META.get(cat_key, CATEGORY_META["unknown"])
+        color = meta["color"]
+        label = meta["label"]
+        desc = self._CAT_DESC.get(cat_key, "")
+
+        frame = QFrame()
+        frame.setStyleSheet(
+            f"QFrame {{ background: rgba(10,14,20,0.6); "
+            f"border-left: 3px solid {color}; border-radius: 8px; margin-bottom: 4px; }}"
+        )
+        lay = QVBoxLayout(frame)
+        lay.setContentsMargins(16, 10, 16, 10)
+        lay.setSpacing(5)
+
+        header = QHBoxLayout()
+        cat_lbl = QLabel(label.upper())
+        cat_lbl.setFont(QFont(FONT_MONO, 9, QFont.Weight.Bold))
+        cat_lbl.setStyleSheet(f"color: {color}; letter-spacing: 2px; background: transparent;")
+        header.addWidget(cat_lbl)
+        header.addStretch()
+        count_lbl = QLabel(f"{len(arts)} article{'s' if len(arts)>1 else ''}")
+        count_lbl.setFont(QFont(FONT_MONO, 8))
+        count_lbl.setStyleSheet("color: rgba(255,255,255,0.35); background: transparent;")
+        header.addWidget(count_lbl)
+        lay.addLayout(header)
+
+        if desc:
+            desc_lbl = QLabel(desc)
+            desc_lbl.setFont(QFont(FONT_FAMILY, 9))
+            desc_lbl.setStyleSheet("color: rgba(255,255,255,0.30); background: transparent;")
+            desc_lbl.setWordWrap(True)
+            lay.addWidget(desc_lbl)
+
+        for art in arts[:3]:
+            title = art.get("titre_fr") or art.get("titre") or art.get("title", "")
+            if not title:
+                continue
+            t = title[:95] + ("…" if len(title) > 95 else "")
+            art_lbl = QLabel(f"• {t}")
+            art_lbl.setFont(QFont(FONT_FAMILY, 9))
+            art_lbl.setStyleSheet("color: rgba(255,255,255,0.55); background: transparent;")
+            art_lbl.setWordWrap(True)
+            lay.addWidget(art_lbl)
+
+        if len(arts) > 3:
+            more = QLabel(f"+ {len(arts)-3} autre{'s' if len(arts)-3>1 else ''}…")
+            more.setFont(QFont(FONT_MONO, 8))
+            more.setStyleSheet("color: rgba(255,255,255,0.20); background: transparent;")
+            lay.addWidget(more)
+
+        return frame
+
     def _render_morning(self, content: dict):
         articles = content.get("articles", [])
         if not articles:
@@ -623,6 +714,7 @@ class _ResumeView(QScrollArea):
         self._content_layout.addWidget(self._separator())
         for art in articles:
             self._content_layout.addWidget(self._make_summary_card(art))
+        self._render_category_breakdown()
 
     def _render_evening(self, content: dict):
         highlights = content.get("highlights", [])
@@ -650,6 +742,7 @@ class _ResumeView(QScrollArea):
             for art in afternoon:
                 self._content_layout.addWidget(self._make_summary_card(art))
 
+        self._render_category_breakdown()
         if not highlights and not morning and not afternoon:
             self._show_empty()
 
@@ -789,7 +882,7 @@ class MainWindow(QMainWindow):
             gui_config.get("window_height", 800),
         )
 
-        icon_path = ASSET_DIR / "Symbole-radar-moderne-sur-fond-bleu.ico"
+        icon_path = ASSET_DIR / "cyberwatch.ico"
         if icon_path.exists():
             self.setWindowIcon(QIcon(str(icon_path)))
 
