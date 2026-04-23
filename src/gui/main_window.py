@@ -1349,8 +1349,13 @@ class MainWindow(QMainWindow):
         self._active_category = key
         for btn in self._sidebar.category_buttons:
             btn.set_active(btn.key == key)
+        # Si le resume est visible, revenir au feed principal
+        if not self._scroll.isVisible():
+            self._resume_view.setVisible(False)
+            self._scroll.setVisible(True)
+            self._sidebar.resume_button.setChecked(False)
+            self._detail_panel.setVisible(True)
         self._apply_filters()
-
     @Slot(int)
     def _on_score_filter(self, value: int) -> None:
         self._min_score = value
