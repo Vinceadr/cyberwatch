@@ -1,4 +1,4 @@
-"""MainWindow — Dashboard PySide6 — Bioluminescent Etch Theme."""
+﻿"""MainWindow — Dashboard PySide6 — Bioluminescent Etch Theme."""
 
 from __future__ import annotations
 
@@ -1060,13 +1060,16 @@ class MainWindow(QMainWindow):
     def _load_data(self) -> None:
         from datetime import datetime, timedelta, timezone
         order = "DESC" if self._sort_desc else "ASC"
-        # Show only articles from this week (since last Sunday 00:00)
+        # Fenetre glissante selon retention config (defaut 7 jours)
         now = datetime.now(tz=timezone.utc)
-        days_since_sunday = (now.weekday() + 1) % 7  # Mon=0 … Sun=6
-        week_start = (now - timedelta(days=days_since_sunday)).replace(
+        retention_days = 7
+        try:
+            retention_days = int(self.config.get("retention", {}).get("days", 7))
+        except Exception:
+            pass
+        date_since = (now - timedelta(days=retention_days)).replace(
             hour=0, minute=0, second=0, microsecond=0
-        )
-        date_since = week_start.isoformat()
+        ).isoformat()
         try:
             self._articles = self._db.get_articles(limit=2000, order=order, date_since=date_since)
         except Exception:
@@ -1075,9 +1078,8 @@ class MainWindow(QMainWindow):
 
         self._rebuild_grid()
         self._update_sidebar()
-        week_label = week_start.strftime("%d/%m")
         self._status_label.setText(
-            f"\u25b8 {len(self._articles)} ARTICLES (semaine du {week_label})  \u2502  {format_next_purge_label()}"
+            f"\u25b8 {len(self._articles)} ARTICLES ({retention_days}j)  \u2502  {format_next_purge_label()}"
         )
 
     # ── Grid rebuild ──
