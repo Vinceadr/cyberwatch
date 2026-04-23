@@ -90,8 +90,9 @@ class _Sidebar(QFrame):
         logo_row.setSpacing(10)
 
         # Icon in etch-glow bordered box
+        _LOGO_SIZE = 80
         logo_box = QFrame()
-        logo_box.setFixedSize(56, 56)
+        logo_box.setFixedSize(_LOGO_SIZE, _LOGO_SIZE)
         logo_box.setStyleSheet("QFrame { background: transparent; border: none; }")
         logo_box_lay = QHBoxLayout(logo_box)
         logo_box_lay.setContentsMargins(0, 0, 0, 0)
@@ -99,16 +100,21 @@ class _Sidebar(QFrame):
         self._logo = QLabel()
         logo_path = ASSET_DIR / "cyberwatch_logo.png"
         if logo_path.exists():
-            pixmap = QPixmap(str(logo_path)).scaled(
-                56, 56, Qt.AspectRatioMode.IgnoreAspectRatio,
+            from PySide6.QtGui import QPixmap as _QP
+            _raw = _QP(str(logo_path))
+            _dpr = QApplication.primaryScreen().devicePixelRatio() if QApplication.primaryScreen() else 1.0
+            _px = int(_LOGO_SIZE * _dpr)
+            _scaled = _raw.scaled(
+                _px, _px, Qt.AspectRatioMode.KeepAspectRatio,
                 Qt.TransformationMode.SmoothTransformation,
             )
-            self._logo.setPixmap(pixmap)
+            _scaled.setDevicePixelRatio(_dpr)
+            self._logo.setPixmap(_scaled)
         else:
             self._logo.setText("CW")
-            self._logo.setFont(QFont(FONT_MONO, 14, QFont.Weight.Bold))
+            self._logo.setFont(QFont(FONT_MONO, 16, QFont.Weight.Bold))
         self._logo.setStyleSheet("background: transparent;")
-        self._logo.setFixedSize(56, 56)
+        self._logo.setFixedSize(_LOGO_SIZE, _LOGO_SIZE)
         self._logo.setAlignment(Qt.AlignmentFlag.AlignCenter)
         logo_box_lay.addWidget(self._logo)
         logo_row.addWidget(logo_box)
