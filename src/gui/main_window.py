@@ -831,11 +831,11 @@ class MainWindow(QMainWindow):
         QTimer.singleShot(3000, self._check_startup_summary)
 
         # ── Auto-collect RSS (every 2h) ─────────────────────────────────────
+        fetch_interval_min = config.get('scheduler', {}).get('fetch_interval_minutes', 30)
         self._collect_timer = QTimer(self)
         self._collect_timer.timeout.connect(self._on_auto_collect)
-        self._collect_timer.start(2 * 60 * 60 * 1000)  # 2 heures
-        # First collect 8 seconds after startup (non-bloquant)
-        QTimer.singleShot(8000, self._on_auto_collect)
+        self._collect_timer.start(fetch_interval_min * 60 * 1000)
+        QTimer.singleShot(10000, self._on_auto_collect)
 
         logger.info("GUI initialisee")
 
@@ -1458,4 +1458,5 @@ class MainWindow(QMainWindow):
         except Exception as exc:
             logger.exception("Erreur purge manuelle GUI")
             QMessageBox.critical(self, "Erreur purge", str(exc))
+
 

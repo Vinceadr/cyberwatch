@@ -31,6 +31,7 @@ class PipelineResult:
     completed_at: datetime | None = None
     articles_scraped: int = 0
     articles_new: int = 0
+    articles_translated: int = 0
     articles_verified: int = 0
     emails_sent: int = 0
     errors: list[str] = field(default_factory=list)
