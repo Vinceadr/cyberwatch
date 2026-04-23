@@ -13,6 +13,7 @@ CyberWatch est une application de bureau Python qui collecte, analyse et classe 
 - **Dashboard PySide6** : Interface graphique temps reel, filtrage par categorie et severite
 - **Traduction automatique** : Articles EN -> FR via deep-translator
 - **Alertes email** : Digest quotidien + alertes immediates pour incidents CRITIQUES
+- **Digest cloud automatique** : Email IT quotidien envoye chaque matin via GitHub Actions (sans PC allume)
 - **Pipeline CLI** : Mode headless pour serveurs et automatisation
 - **Base SQLite locale** : Historique 7 jours, zero cloud
 - **Sources francaises** : CERT-FR, ZATAZ, UnderNews, IT-Connect, Korben, etc.
@@ -31,6 +32,10 @@ cyberwatch/
 │   │   ├── content_fetcher.py  # Enrichissement articles
 │   │   ├── emailer.py          # Alertes email
 │   │   └── weekly_scheduler.py # Planification automatique
+├── scripts/
+│   ├── daily_digest_cloud.py  # Digest email cloud (GitHub Actions)
+│   ├── run_pipeline.py        # Pipeline CLI headless
+│   └── purge_pipeline.py      # Purge articles expires
 │   ├── gui/
 │   │   ├── main_window.py      # Fenetre principale PySide6
 │   │   ├── widgets.py          # Composants UI
@@ -136,6 +141,43 @@ pytest --cov=src tests/
 
 ---
 
+
+## Digest Email Quotidien (GitHub Actions)
+
+CyberWatch envoie automatiquement un **digest HTML** chaque matin a 7h via GitHub Actions.
+Le script tourne sur les serveurs de GitHub — **aucun PC allume necessaire**.
+
+### Activation en 4 etapes
+
+**1. Creer un mot de passe d'application Gmail**
+> Compte Google → Securite → Validation en 2 etapes → Mots de passe des applications
+
+**2. Ajouter les Secrets dans le depot GitHub**
+> `github.com/Vinceadr/cyberwatch/settings/secrets/actions`
+
+| Secret | Valeur |
+|--------|--------|
+| `SMTP_USER` | Votre adresse Gmail |
+| `SMTP_PASSWORD` | Mot de passe d'application (16 caracteres) |
+
+**3. Le workflow est pret**
+Le fichier `.github/workflows/daily-digest.yml` est deja present dans le depot.
+Il se declenche a **5h00 UTC (= 7h00 Paris CEST)**.
+
+**4. Tester manuellement**
+```
+GitHub → Actions → CyberWatch Daily Digest → Run workflow
+```
+
+### Contenu du digest
+
+- Top 5 articles par categorie (Cybersecurite, Hacks, IA, Systemes, Reseaux, Dev)
+- Classes par score de confiance de la source
+- Filtre : articles des dernieres 24h uniquement
+- Format HTML responsive (dark theme)
+
+---
+
 ## Roadmap
 
 - [ ] Export PDF du digest
@@ -152,3 +194,5 @@ MIT
 ---
 
 *Projet realise dans le cadre du BTS SIO SISR — ANDREO Vincent*
+
+

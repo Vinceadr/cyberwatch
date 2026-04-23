@@ -210,6 +210,58 @@ rm -rf logs/
 
 ---
 
+
+## Digest Email Quotidien via GitHub Actions
+
+CyberWatch peut envoyer un **digest HTML** chaque matin a 7h directement depuis les serveurs GitHub.
+**Le PC n'a pas besoin d'etre allume.**
+
+### Prerequis
+
+- Compte GitHub avec le depot CyberWatch (github.com/Vinceadr/cyberwatch)
+- Adresse Gmail avec la **validation en 2 etapes** activee
+
+### Etape 1 — Creer un mot de passe d'application Gmail
+
+1. Aller sur https://myaccount.google.com/apppasswords
+2. Taper un nom (ex : CyberWatch Digest) → **Creer**
+3. Google affiche un code de **16 caracteres** — noter ce code (affiché une seule fois)
+
+### Etape 2 — Ajouter les Secrets dans GitHub
+
+Aller sur :
+`
+https://github.com/Vinceadr/cyberwatch/settings/secrets/actions
+`
+
+Ajouter deux secrets :
+
+| Name | Value |
+|------|-------|
+| SMTP_USER | Votre adresse Gmail |
+| SMTP_PASSWORD | Code 16 caracteres (sans espaces) |
+
+### Etape 3 — Le workflow est deja configure
+
+Le fichier .github/workflows/daily-digest.yml est present dans le depot.
+Il se declenche automatiquement a **5h00 UTC = 7h00 Paris (CEST)**.
+
+### Tester manuellement
+
+`
+https://github.com/Vinceadr/cyberwatch/actions/workflows/daily-digest.yml
+`
+→ Cliquer **"Run workflow"** → verifier la reception de l'email en 1-2 minutes.
+
+### Contenu du digest
+
+- Top 5 articles des dernieres 24h par categorie
+- Classe par score de confiance de la source
+- Categories : Cybersecurite, Hacks, IA, Systemes, Reseaux, Developpement
+- Format HTML dark theme
+
+---
+
 ## Problemes courants
 
 | Probleme | Solution |
@@ -225,3 +277,4 @@ rm -rf logs/
 ## Support
 
 Ouvrir une issue sur [github.com/Vinceadr/cyberwatch/issues](https://github.com/Vinceadr/cyberwatch/issues)
+
