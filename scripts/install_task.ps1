@@ -2,7 +2,7 @@
 $ErrorActionPreference = "Stop"
 $ScriptDir  = Split-Path -Parent $MyInvocation.MyCommand.Path
 $ProjectDir = Split-Path -Parent $ScriptDir
-$PythonExe  = (Get-Command python -ErrorAction SilentlyContinue).Source
+$PythonExe  = (Get-Command pythonw -ErrorAction SilentlyContinue).Source
 $ExePath = Join-Path $ProjectDir "dist\CyberWatch\CyberWatch.exe"
 $UseExe  = Test-Path $ExePath
 if ($UseExe) {
@@ -34,3 +34,4 @@ Write-Host "Automatisation CyberWatch active." -ForegroundColor Cyan
 Write-Host "  - Collecte : au demarrage + toutes les 30 min" -ForegroundColor Cyan
 Write-Host "  - Purge    : dimanche 00h00 (articles > 7 jours supprimes, favoris gardes)" -ForegroundColor Cyan
 Write-Host "Pour desinstaller : scripts\uninstall_task.ps1" -ForegroundColor Cyan
+
